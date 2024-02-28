@@ -92,7 +92,7 @@ const RentModal: React.FC<FormProps> = () => {
 		watch,
 		formState: { errors },
 		reset,
-	} = useForm<FormProps | FieldValues>({
+	} = useForm<FormProps>({
 		defaultValues: {
 			packageName: "",
 			destination: "",
@@ -470,11 +470,17 @@ const RentModal: React.FC<FormProps> = () => {
 					title="Where is the Destination"
 					subtitle="Choose Destination"
 				/>
-				<CountrySelect
+				{/* <CountrySelect
 					value={destination}
 					onChange={(value) => setCustomValue("destination", value)}
 				/>
-				<Map center={destination?.latlng} />
+				<Map center={destination?.latlng} /> */}
+				<label className="textbold"> Add Country</label>
+				<input
+					className=" bg-green-50 flex-1"
+					type="text"
+					{...register(destination)}
+				/>
 			</div>
 		);
 	}

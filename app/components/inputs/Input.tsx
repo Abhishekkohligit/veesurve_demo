@@ -2,8 +2,9 @@
 
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { BiRupee } from "react-icons/bi";
+import { FormProps } from "../modals/RentModel";
 
-interface InputProps<FV extends FieldValues = FieldValues> {
+interface InputProps<FV extends FormProps=FormProps> {
 	id: string;
 	label: string;
 	type?: string;
