@@ -59,7 +59,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 			</div>
 			{isOpen && (
 				<div
-					className="absolute rounded-xl shadow-md w-[40vw] md:w-4/5 bg-white overflow-hidden right-0 top-12 text-sm"
+					className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm"
 					onMouseLeave={toggleOpen}
 				>
 					<div className="flex flex-col cursor-pointer  justify-start">
@@ -77,18 +77,21 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 								{/* {currentUser?.email === "veesurveevm@gmail.com" ||
 									currentUser?.email === "abkslesforce@gmail.com" && ( */}
 
-								{currentUser?.email === "veesurveetms@gmail.com" && (
+								{currentUser?.email && (
 									<MenuItem
 										onClick={() => router.push("/holidays/reservations")}
 										label="My Reservations"
 									/>
 								)}
-								<MenuItem
-									onClick={() => router.push("/holidays/properties")}
-									label="My Packages"
-								/>
 
-								{currentUser?.email === "veesurveetms@gmail.com" && (
+								{currentUser?.email && (
+									<MenuItem
+										onClick={() => router.push("/holidays/properties")}
+										label="My Packages"
+									/>
+								)}
+
+								{currentUser?.email && (
 									<MenuItem onClick={rentModal.onOpen} label="Create Package" />
 								)}
 								<hr />
