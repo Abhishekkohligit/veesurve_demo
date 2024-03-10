@@ -15,7 +15,9 @@ import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import Heading from "@/app/components/Heading";
 import { catagories } from "@/app/components/navbar/Catagories";
 import CategoryInput from "@/app/components/inputs/CategoryInput";
-import CountrySelect from "@/app/components/inputs/CountrySelect";
+import CountrySelect, {
+	CountrySelectValue,
+} from "@/app/components/inputs/CountrySelect";
 
 import dynamic from "next/dynamic";
 import Counter from "@/app/components/inputs/Counter";
@@ -29,7 +31,7 @@ import NestedModal from "./NestedModal";
 export interface FormProps extends FieldValues {
 	packageName: string;
 	description: string;
-	destination: string;
+	destination: CountrySelectValue;
 	citiesCovered: string;
 	departureCity: string;
 	nights: number;
@@ -67,14 +69,14 @@ export interface FormProps extends FieldValues {
 
 enum STEPS {
 	CATEGORY = 0,
-	LOCATION = 1,
-	KEYHIGHLIGHTS = 2,
-	EXCLUSIONS = 3,
-	TNC = 4,
-	ITINERARY = 5,
-	IMAGES = 6,
-	INFO = 7,
-	DESCRIPTION = 8,
+	LOCATION = 8,
+	KEYHIGHLIGHTS = 1,
+	EXCLUSIONS = 2,
+	TNC = 3,
+	ITINERARY = 4,
+	IMAGES = 5,
+	INFO = 6,
+	DESCRIPTION = 7,
 	PRICE = 9,
 }
 
@@ -95,7 +97,14 @@ const RentModal: React.FC<FormProps> = () => {
 	} = useForm<FormProps>({
 		defaultValues: {
 			packageName: "",
-			destination: "",
+			// destination: "",
+			destination: {
+				flag: "IN",
+				label: "India",
+				latlng: [20, 77],
+				region: "Asia",
+				value: "IN",
+			},
 			description: "",
 			citiesCovered: "",
 			departureCity: "",
@@ -175,11 +184,11 @@ const RentModal: React.FC<FormProps> = () => {
 		control,
 	});
 
-	const Map = useMemo(
-		() => dynamic(() => import("@/app/components/Map"), { ssr: false }),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[destination]
-	);
+	// const Map = useMemo(
+	// 	() => dynamic(() => import("@/app/components/Map"), { ssr: false }),
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// 	[destination]
+	// );
 
 	const setCustomValue = (id: any, value: any) => {
 		setValue(id, value, {
@@ -209,6 +218,8 @@ const RentModal: React.FC<FormProps> = () => {
 				inclusion: i.inclusion.map((t) => t.incl),
 			})),
 			tnc: data.tnc.map((k) => k.t),
+			// locationValue: data.destination,
+			
 		};
 		axios
 			.post("/api/listings", payload)
@@ -470,17 +481,25 @@ const RentModal: React.FC<FormProps> = () => {
 					title="Where is the Destination"
 					subtitle="Choose Destination"
 				/>
-				{/* <CountrySelect
+				<CountrySelect
 					value={destination}
 					onChange={(value) => setCustomValue("destination", value)}
 				/>
-				<Map center={destination?.latlng} /> */}
-				<label className="textbold"> Add Country</label>
-				<input
+				{/* <Map center={destination?.latlng} />
+				<label className="textbold"> Add Country</label> */}
+				{/* <input
 					className=" bg-green-50 flex-1"
 					type="text"
-					{...register(destination)}
-				/>
+					{...register("destination")}
+				/> */}
+
+				{/* <Input
+					id="destination"
+					label="destination"
+					disabled={isLoading}
+					register={register}
+					errors={errors}
+				/> */}
 			</div>
 		);
 	}
