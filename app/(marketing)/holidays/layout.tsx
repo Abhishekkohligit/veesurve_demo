@@ -1,7 +1,5 @@
 import { Nunito } from "next/font/google";
 
-
-
 // import "./globals.css"
 
 import Navbar from "@/app/components/navbar/Navbar";
@@ -16,14 +14,19 @@ import SearchModel from "@/app/components/modals/SearchModel";
 
 const font = Nunito({ subsets: ["latin"] });
 
-
-
 export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
 	const currentUser = await getCurrentUser();
+	const destinationE = {
+		flag: "IN",
+		label: "India",
+		latlng: [20, 77],
+		region: "Asia",
+		value: "IN",
+	};
 
 	return (
 		<>
@@ -32,7 +35,22 @@ export default async function RootLayout({
 			<RegisterModal />
 			<LoginModal />
 			<PhoneModel />
-			<RentModal packageName={""} description={""} destination={""} citiesCovered={""} departureCity={""} nights={0} days={0} hotelStar={0} price={0} keyHighlights={[]} itinerary={[]} exclusions={[]} tnc={[]} category={""} />
+			<RentModal
+				packageName={""}
+				description={""}
+				destination={destinationE}
+				citiesCovered={""}
+				departureCity={""}
+				nights={0}
+				days={0}
+				hotelStar={0}
+				price={0}
+				keyHighlights={[]}
+				itinerary={[]}
+				exclusions={[]}
+				tnc={[]}
+				category={""}
+			/>
 			<Navbar currentUser={currentUser} />
 			<div className="pb-20 pt-28">{children}</div>
 		</>
